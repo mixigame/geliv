@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="page.title">Geliv · 礼品卡交易平台</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="logo">
+        <span class="logo-icon">G</span>
+        <span class="logo-text">GelivCard</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#rates" data-i18n="nav.rates">报价列表</a>
+        <a href="#how" data-i18n="nav.how">流程</a>
+        <a href="#features" data-i18n="nav.features">优势</a>
+        <a href="#reward" data-i18n="nav.reward">活动</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      </nav>
+      <div class="nav-right">
+        <div class="lang-selector">
+          <button class="lang-btn" id="lang-btn" aria-label="选择语言" data-i18n-attr="aria-label" data-i18n-attr-value="lang.select">
+            <span class="lang-current" data-i18n="lang.current">中文</span>
+            <span class="lang-arrow">▼</span>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <button class="lang-option active" data-lang="zh">中文</button>
+            <button class="lang-option" data-lang="en">English</button>
+          </div>
+        </div>
+        <!--<button class="btn btn-outline" id="nav-start-btn">开始</button>-->
+        <!--<button class="btn btn-primary" id="reward-start-btn">立即参与</button>-->
+      </div>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1><span data-i18n="hero.title">专注礼品卡与支付解决方案</span><br><span class="highlight" data-i18n="hero.titleHighlight">安全高价 </span><span data-i18n="hero.titleSep">·</span> <span data-i18n="hero.titleEnd">一站式服务</span></h1>
+        <p data-i18n="hero.subtitle">
+          避免低价、避免中介、避免被骗<br>
+          我们提供更透明、更稳定的回收体验。
+        </p>
+        <!--<div class="hero-actions">
+          <button class="btn btn-primary" id="hero-start-btn">立即开始</button>
+          <button class="btn btn-ghost" id="learn-more-btn">了解如何运作</button>
+        </div>-->
+        <div class="hero-meta">
+          <span data-i18n="hero.meta1">✅ 团队长期深耕礼品卡交易和支付通道变现。</span>
+          <span data-i18n="hero.meta2">✅ 让你的礼品卡获得更高价值。</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <h3 data-i18n="hero.card.title">新用户认证 · 领取 500 奈拉</h3>
+          <!--<p>简单三步，完成认证并领取奖励</p>-->
+        </div>
+        <div class="hero-steps">
+          <div class="step">
+            <span class="step-number">1</span>
+            <div>
+              <h4 data-i18n="hero.step1.title">真实用户</h4>
+              <p data-i18n="hero.step1.desc">仅限真实有礼品卡交易记录的用户</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number">2</span>
+            <div>
+              <h4 data-i18n="hero.step2.title">交易记录</h4>
+              <p data-i18n="hero.step2.desc">最近真实礼品卡交易聊天记录</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <div>
+              <h4 data-i18n="hero.step3.title">限领一次</h4>
+              <p data-i18n="hero.step3.desc">通过后，奖励发放至你指定的钱包</p>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" id="card-start-btn" data-i18n="hero.card.button">
+          立即参与奖励
+        </button>
+      </div>
+    </div>
+  </section>
+<!-- 奖励活动 
+<section class="section section-reward" id="reward">
+  <div class="container reward-inner">
+    <div class="reward-text">
+      <h2 class="section-title">新用户认证 · 领取 500 奈拉</h2>
+      <ul class="reward-list">
+        <li>✅ 真实礼品卡交易者专享</li>
+        <li>✅ 完成信息 + 截图上传后参与奖励</li>
+        <li>✅ 每个手机号限领一次</li>
+        <li>✅ 奖励发放至你指定的钱包</li>
+      </ul>
+      
+    </div>-->
+    <!--<div class="reward-card tech-card">
+      <h3>我们会核对这些信息</h3>
+      <ul class="reward-mini-list">
+        <li>最近 1–3 笔交易金额</li>
+        <li>常用卡种（Apple / Steam / Razer / Chime 等）</li>
+        <li>交易频率（月均笔数）</li>
+        <li>是否有长期固定上家 / 下家</li>
+      </ul>
+      <p class="reward-tip">信息仅用于内部风控，不会公开给任何第三方。</p>
+    </div>-->
+  </div>
+</section>
+  <!-- 首屏 Hero 
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1>礼品卡高价秒兑<br>安全结算 · 长期合作</h1>
+        <p>
+          专注礼品卡回收与结算。上传真实交易记录，通过审核即可获得
+          <span class="highlight">500 奈拉</span> 新人奖励。
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="hero-start-btn">马上提交信息</button>
+          <button class="btn btn-ghost" id="learn-more-btn">了解流程</button>
+        </div>
+        <div class="hero-meta">
+          <span>✅ 真实礼品卡交易者优先</span>
+          <span>🔒 不直接暴露 WhatsApp，降低封号风险</span>
+        </div>
+      </div>
+      <div class="hero-card tech-card">
+        <div class="hero-card-header">
+          <h3>一站式礼品卡通道</h3>
+          <p>自动筛选 · 智能报价 · 人工风控</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-label">今日已审核</span>
+            <span class="stat-value">128+</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">平均结算时间</span>
+            <span class="stat-value">＜30min</span>
+          </div>
+        </div>
+        <div class="hero-steps compact">
+          <div class="step">
+            <span class="step-number">1</span>
+            <div>
+              <h4>提交手机号</h4>
+              <p>基础信息 & 交易习惯</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number">2</span>
+            <div>
+              <h4>上传截图</h4>
+              <p>最近礼品卡交易记录</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <div>
+              <h4>审核通过</h4>
+              <p>对接专属客服 · 领 500 奈拉</p>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" id="card-start-btn">
+          填写认证信息
+        </button>
+      </div>
+    </div>
+  </section>-->
+
+  <!-- 报价列表 -->
+  <section class="section section-rates" id="rates">
+    <div class="container">
+      <h2 class="section-title" data-i18n="rates.title">报价列表</h2>
+      <!--<p class="section-subtitle">
+        以下为示例报价，实际价格以审核通过后实时系统为准。
+      </p>-->
+
+      <div class="rates-grid">
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-apple">
+              <img width="26" height="26" src="./image/apple.png">
+            </div>
+            <div>
+              <div class="rate-name">Apple (iTunes)</div>
+              <div class="rate-tag">US · Physical</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1182.92</span>
+          </div>
+        </div>
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-apple">
+              <img width="26" height="26" src="./image/steam.png">
+            </div>
+            <div>
+              <div class="rate-name">Steam</div>
+              <div class="rate-tag">US · Physical</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1182.92</span>
+          </div>
+        </div>
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-amazon">
+              <img width="26" height="26" src="./image/razer.png">
+            </div>
+            <div>
+              <div class="rate-name">Razer</div>
+              <div class="rate-tag">US · Physical</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦888.62</span>
+          </div>
+        </div>
+
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-dark"><img width="26" height="26" src="./image/xbox.png"></div>
+            <div>
+              <div class="rate-name">Xbox</div>
+              <div class="rate-tag">US · Code</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1041.51</span>
+          </div>
+        </div>
+
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-green"><img width="26" height="26" src="./image/chime.png"></div>
+            <div>
+              <div class="rate-name">Chime</div>
+              <div class="rate-tag">US · Deposit</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1194.39</span>
+          </div>
+        </div>
+
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-gift">G</div>
+            <div>
+              <div class="rate-name">Vanilla / Visa GC</div>
+              <div class="rate-tag">US · Physical</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1108.39</span>
+          </div>
+        </div>
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-apple">
+              <img width="26" height="26" src="./image/apple.png">
+            </div>
+            <div>
+              <div class="rate-name">Apple (iTunes)</div>
+              <div class="rate-tag">US · Physical</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1182.92</span>
+          </div>
+        </div>
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-apple">
+              <img width="26" height="26" src="./image/steam.png">
+            </div>
+            <div>
+              <div class="rate-name">Steam</div>
+              <div class="rate-tag">US · Physical</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1182.92</span>
+          </div>
+        </div>
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-amazon">
+              <img width="26" height="26" src="./image/razer.png">
+            </div>
+            <div>
+              <div class="rate-name">Razer</div>
+              <div class="rate-tag">US · Physical</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦888.62</span>
+          </div>
+        </div>
+
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-dark"><img width="26" height="26" src="./image/xbox.png"></div>
+            <div>
+              <div class="rate-name">Xbox</div>
+              <div class="rate-tag">US · Code</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1041.51</span>
+          </div>
+        </div>
+
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-green"><img width="26" height="26" src="./image/chime.png"></div>
+            <div>
+              <div class="rate-name">Chime</div>
+              <div class="rate-tag">US · Deposit</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1194.39</span>
+          </div>
+        </div>
+
+        <div class="rate-card">
+          <div class="rate-left">
+            <div class="card-logo circle-gift">Z</div>
+            <div>
+              <div class="rate-name">Zelle</div>
+              <div class="rate-tag">US · Number or Email</div>
+            </div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-value">1$ ≈ ₦1108.39</span>
+          </div>
+        </div>
+        <div class="rate-card more-card">
+          <div class="rate-left">
+            <div class="more-label" data-i18n="rates.more">更多卡种</div>
+          </div>
+          <div class="rate-right">
+            <span class="rate-note" data-i18n="rates.moreNote">由专属客服提供你的专属报价表</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 使用流程 
+  <section class="section" id="how">
+    <div class="container">
+      <h2 class="section-title">3 步完成接入</h2>
+      <p class="section-subtitle">
+        用最少的信息，完成必要风控，换取稳定长期通道。
+      </p>
+      <div class="grid-3">
+        <div class="feature-card">
+          <div class="icon-badge">①</div>
+          <h3>提交基本信息</h3>
+          <p>手机号、常用礼品卡类型、交易区间等。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon-badge">②</div>
+          <h3>上传聊天截图</h3>
+          <p>最近一笔真实交易记录，用于识别交易习惯。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon-badge">③</div>
+          <h3>审核 & 建群对接</h3>
+          <p>通过后对接专属客服，进入长期合作渠道。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 优势亮点 -->
+  <section class="section section-alt" id="features">
+    <div class="container">
+      <h2 class="section-title" data-i18n="features.title">为交易者设计的系统化通道</h2>
+      <div class="grid-3">
+        <div class="feature-card tech-card">
+          <h3 data-i18n="features.card1.title">风控友好</h3>
+          <p data-i18n="features.card1.desc">通过网页完成筛选与沟通，避免大量冷加造成 WhatsApp 封号。</p>
+        </div>
+        <div class="feature-card tech-card">
+          <h3 data-i18n="features.card2.title">价格透明</h3>
+          <p data-i18n="features.card2.desc">核心卡种公开区间价，成交价由专属客服实时确认。</p>
+        </div>
+        <div class="feature-card tech-card">
+          <h3 data-i18n="features.card3.title">稳定长期</h3>
+          <p data-i18n="features.card3.desc">你只需要对接一个入口，我们帮你匹配多家平台与支付通道。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- FAQ -->
+  <section class="section section-alt" id="faq">
+    <div class="container">
+      <h2 class="section-title" data-i18n="faq.title">常见问题</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q1">我上传的聊天截图，会被泄露吗？</span>
+            <span class="faq-toggle" aria-hidden="true">＋</span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a1">
+            我们只用于内部风控与评级，不会展示给任何第三方。你也可以适当遮挡头像、昵称等隐私信息。
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q2">500 奈拉奖励什么时候发？</span>
+            <span class="faq-toggle" aria-hidden="true">＋</span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a2">
+            审核通过后 24 小时内，我们会通过你留的联系方式与您确认，并发放奖励。
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q3">一定要留 WhatsApp 吗？</span>
+            <span class="faq-toggle" aria-hidden="true">＋</span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a3">
+            不强制。你可以先留手机号或邮箱，等通过审核后再选择更稳定的沟通方式。
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q4">我交易不算特别频繁，也可以合作吗？</span>
+            <span class="faq-toggle" aria-hidden="true">＋</span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a4">
+            可以，只要是持续真实交易，我们都会根据频率与卡种匹配合适的方案。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 底部 -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      
+      <div class="footer-right">
+        <p class="footer-copy">© <span id="year"></span> Geliv. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 线索收集弹窗 -->
+  <div class="modal" id="lead-modal">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn">×</button>
+      <h2 data-i18n="modal.title">提交信息 · 获取专属通道</h2>
+      <p class="modal-subtitle" data-i18n="modal.subtitle">
+        请填写真实信息，便于我们审核并与您联系。当前为前端示例，后续会接入真实系统。
+      </p>
+      <form class="lead-form" id="lead-form">
+        <label class="form-field">
+          <span data-i18n="form.phone">手机号（必填）</span>
+          <input type="tel" name="phone" data-i18n-attr="placeholder" data-i18n-attr-value="form.phonePlaceholder" required />
+        </label>
+
+        <label class="form-field">
+          <span data-i18n="form.cardType">主要礼品卡类型</span>
+          <select name="cardType">
+            <option value="" data-i18n="form.select">请选择</option>
+            <option>Apple Gift Card</option>
+            <option>Amazon Gift Card</option>
+            <option data-i18n="form.steam">Steam / 游戏卡</option>
+            <option>Vanilla / Visa GC</option>
+            <option data-i18n="form.other">其他类型礼品卡</option>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span data-i18n="form.amount">单笔常见面额（约）</span>
+          <input type="number" name="amount" data-i18n-attr="placeholder" data-i18n-attr-value="form.amountPlaceholder" />
+        </label>
+
+        <label class="form-field">
+          <span data-i18n="form.frequency">月均交易频率</span>
+          <select name="frequency">
+            <option value="" data-i18n="form.select">请选择</option>
+            <option data-i18n="form.freq1">每月 1–5 笔</option>
+            <option data-i18n="form.freq2">每月 5–20 笔</option>
+            <option data-i18n="form.freq3">每月 20 笔以上</option>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span data-i18n="form.contact">可选：你的 WhatsApp / Telegram</span>
+          <input type="text" name="contact" data-i18n-attr="placeholder" data-i18n-attr-value="form.contactPlaceholder" />
+        </label>
+
+        <label class="form-field">
+          <span data-i18n="form.screenshot">上传聊天截图（示意，需后端支持）</span>
+          <input type="file" name="screenshot" disabled />
+          <small data-i18n="form.screenshotNote">当前为前端展示，真实文件上传将由后端接口实现。</small>
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-full" data-i18n="form.submit">
+          提交信息（示例，不会真正发送）
+        </button>
+
+        <p class="form-tip" id="form-tip"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- 在线聊天弹窗 -->
+  <div class="modal" id="chat-modal">
+    <div class="modal-backdrop" id="chat-backdrop"></div>
+    <div class="modal-content chat-content">
+      <button class="modal-close" id="chat-close-btn">×</button>
+      <h2 data-i18n="chat.title">在线客服（示例）</h2>
+      <p class="modal-subtitle" data-i18n="chat.subtitle">
+        这里可以接第三方在线聊天组件，或接入 WhatsApp / Telegram 跳转。
+      </p>
+      <div class="chat-placeholder">
+        <div class="chat-bubble system" data-i18n="chat.message1">
+          你好，这里是 Geliv 客服，请简单描述你的礼品卡类型与大致金额。
+        </div>
+        <div class="chat-bubble user" data-i18n="chat.message2">
+          示例：我这边主要是 US Apple 100–500 面额，偶尔有 Amazon。
+        </div>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" data-i18n-attr="placeholder" data-i18n-attr-value="chat.inputPlaceholder" />
+        <button class="btn-send" data-i18n="chat.send">发送</button>
+      </div>
+      <p class="chat-tips" data-i18n="chat.tips">
+        真实环境中可以嵌入 Tawk.to、Crisp 等客服组件，或一键跳转 WhatsApp 对话链接。
+      </p>
+    </div>
+  </div>
+
+  <!-- 悬浮在线聊天按钮 -->
+  <button class="chat-float" id="chat-float" data-i18n-attr="aria-label" data-i18n-attr-value="chat.floatLabel">
+    <span class="chat-dot" aria-hidden="true"></span>
+    <span data-i18n="chat.float">在线客服</span>
+  </button>
+
+  <script src="main.js"></script>
+</body>
+</html>
