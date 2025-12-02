@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="page.title">Geliv · 礼品卡交易平台</title>
   <link rel="stylesheet" href="style.css" />
+  
+  <!-- Crisp 在线客服 -->
+  <script type="text/javascript">
+    window.$crisp=[];
+    window.CRISP_WEBSITE_ID="b9c6ce32-ebfd-4e3d-b320-737d07558fe4";
+    (function(){
+      d=document;
+      s=d.createElement("script");
+      s.src="https://client.crisp.chat/l.js";
+      s.async=1;
+      d.getElementsByTagName("head")[0].appendChild(s);
+    })();
+  </script>
 </head>
 <body>
   <!-- 顶部导航 -->
@@ -24,12 +37,12 @@
       <div class="nav-right">
         <div class="lang-selector">
           <button class="lang-btn" id="lang-btn" aria-label="选择语言" data-i18n-attr="aria-label" data-i18n-attr-value="lang.select">
-            <span class="lang-current" data-i18n="lang.current">中文</span>
+            <span class="lang-current" data-i18n="lang.current">English</span>
             <span class="lang-arrow">▼</span>
           </button>
           <div class="lang-dropdown" id="lang-dropdown">
-            <button class="lang-option active" data-lang="zh">中文</button>
-            <button class="lang-option" data-lang="en">English</button>
+            <button class="lang-option" data-lang="zh">中文</button>
+            <button class="lang-option active" data-lang="en">English</button>
           </div>
         </div>
         <!--<button class="btn btn-outline" id="nav-start-btn">开始</button>-->
@@ -553,11 +566,6 @@
     </div>
   </div>
 
-  <!-- 悬浮在线聊天按钮 -->
-  <button class="chat-float" id="chat-float" data-i18n-attr="aria-label" data-i18n-attr-value="chat.floatLabel">
-    <span class="chat-dot" aria-hidden="true"></span>
-    <span data-i18n="chat.float">在线客服</span>
-  </button>
 
   <script src="main.js"></script>
 </body>

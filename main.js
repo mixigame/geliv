@@ -16,7 +16,19 @@ function closeLeadModal() {
   if (modal) modal.classList.remove("show");
 }
 
-[heroBtn, navBtn, cardBtn, rewardBtn].forEach((btn) => {
+// "立即参与奖励" 按钮点击后直接打开 Crisp 聊天
+if (cardBtn) {
+  cardBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    // 打开 Crisp 聊天
+    if (window.$crisp && window.$crisp.push) {
+      window.$crisp.push(["do", "chat:open"]);
+    }
+  });
+}
+
+// 其他按钮仍然打开表单弹窗
+[heroBtn, navBtn, rewardBtn].forEach((btn) => {
   if (btn) btn.addEventListener("click", openLeadModal);
 });
 
@@ -67,9 +79,9 @@ if (leadForm) {
   leadForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (formTip) {
-      const tipText = currentLang === "zh" 
-        ? "已模拟提交（当前为前端示例）。后续将接入真实后端接口。"
-        : "Submission simulated (currently a frontend demo). Will be connected to real backend API later.";
+      const tipText = currentLang === "en" 
+        ? "Submission simulated (currently a frontend demo). Will be connected to real backend API later."
+        : "已模拟提交（当前为前端示例）。后续将接入真实后端接口。";
       formTip.textContent = tipText;
     }
   });
@@ -86,7 +98,6 @@ if (yearSpan) {
 const chatModal = document.getElementById("chat-modal");
 const chatBackdrop = document.getElementById("chat-backdrop");
 const chatCloseBtn = document.getElementById("chat-close-btn");
-const chatFloatBtn = document.getElementById("chat-float");
 
 function openChatModal() {
   if (chatModal) chatModal.classList.add("show");
@@ -94,10 +105,6 @@ function openChatModal() {
 
 function closeChatModal() {
   if (chatModal) chatModal.classList.remove("show");
-}
-
-if (chatFloatBtn) {
-  chatFloatBtn.addEventListener("click", openChatModal);
 }
 
 if (chatBackdrop) {
@@ -277,7 +284,7 @@ const translations = {
 
 /* 语言切换功能 */
 
-let currentLang = localStorage.getItem("preferred-language") || "zh";
+let currentLang = localStorage.getItem("preferred-language") || "en";
 
 function setLanguage(lang) {
   currentLang = lang;
@@ -371,7 +378,7 @@ document.addEventListener("click", (e) => {
 
 // 页面加载时应用保存的语言
 document.addEventListener("DOMContentLoaded", () => {
-  const savedLang = localStorage.getItem("preferred-language") || "zh";
+  const savedLang = localStorage.getItem("preferred-language") || "en";
   setLanguage(savedLang);
   
   // 更新语言选择器的显示
