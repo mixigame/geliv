@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geliv BTC Payment</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --card: #0e1b2e;
+      --card2: #111f35;
+      --text: #f4f7fb;
+      --muted: #9aa8bd;
+      --line: #243750;
+      --primary: #1283ff;
+      --success: #24d18c;
+      --warn: #f6b94b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top, #102849 0%, var(--bg) 45%, #030812 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .wrap { max-width: 480px; margin: 0 auto; }
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 800;
+    }
+    .logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #16e08a, #1283ff);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #fff;
+    }
+    .pill {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(17,31,53,.96), rgba(12,23,40,.96));
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    }
+    h1 { font-size: 24px; margin: 0 0 8px; }
+    .sub { color: var(--muted); line-height: 1.5; margin-bottom: 18px; }
+    .amount {
+      background: var(--card2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 18px 0;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .row:last-child { border-bottom: 0; }
+    .label { color: var(--muted); }
+    .value { font-weight: 700; text-align: right; word-break: break-all; }
+    .qrbox {
+      background: #fff;
+      border-radius: 18px;
+      padding: 16px;
+      margin: 18px auto;
+      width: 230px;
+      height: 230px;
+      display: grid;
+      place-items: center;
+    }
+    #qrcode canvas, #qrcode img { width: 198px !important; height: 198px !important; }
+    .inputbox {
+      background: #07111f;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    .inputbox small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .copyline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .copyline input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      color: var(--text);
+      outline: none;
+      font-size: 13px;
+      min-width: 0;
+    }
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), #0b63e6);
+      color: #fff;
+      margin-top: 16px;
+    }
+    .btn-secondary {
+      background: #1a2b44;
+      color: #fff;
+      border: 1px solid var(--line);
+      white-space: nowrap;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+    .btn-lightning {
+      width: 100%;
+      background: linear-gradient(135deg, #ffcc33, #ff8c00);
+      color: #0b1020;
+      margin-top: 10px;
+    }
+    .status {
+      margin-top: 16px;
+      background: rgba(36,209,140,.09);
+      border: 1px solid rgba(36,209,140,.25);
+      color: #bdf7df;
+      border-radius: 14px;
+      padding: 13px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .warn {
+      background: rgba(246,185,75,.09);
+      border-color: rgba(246,185,75,.25);
+      color: #ffe0a3;
+    }
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 18px;
+      line-height: 1.5;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo">
+        <div class="logo-badge">G</div>
+        Geliv Pay
+      </div>
+      <div class="pill">BTC Payment</div>
+    </div>
+
+    <div class="card">
+      <h1>Pay with Bitcoin</h1>
+      <div class="sub">
+        Scan the QR code or copy the BTC address. You can also open Cash App and paste the address manually.
+      </div>
+
+      <div class="amount">
+        <div class="row">
+          <div class="label">Order ID</div>
+          <div class="value" id="orderId">10001</div>
+        </div>
+        <div class="row">
+          <div class="label">USD Amount</div>
+          <div class="value" id="usdAmount">$100.00</div>
+        </div>
+        <div class="row">
+          <div class="label">BTC Amount</div>
+          <div class="value" id="btcAmount">0.00125 BTC</div>
+        </div>
+        <div class="row">
+          <div class="label">Expires In</div>
+          <div class="value" id="countdown">15:00</div>
+        </div>
+      </div>
+
+      <div class="qrbox">
+        <div id="qrcode"></div>
+      </div>
+
+      <div class="inputbox">
+        <small>BTC Address</small>
+        <div class="copyline">
+          <input id="btcAddress" readonly value="bc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+          <button class="btn-secondary" onclick="copyValue('btcAddress')">Copy</button>
+        </div>
+      </div>
+
+      <div class="inputbox">
+        <small>Lightning Invoice / Payment Request</small>
+        <div class="copyline">
+          <input id="lightningInvoice" readonly value="lnbc100u1pxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+          <button class="btn-secondary" onclick="copyValue('lightningInvoice')">Copy</button>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="openCashApp()">Open Cash App</button>
+      <button class="btn-lightning" onclick="copyValue('lightningInvoice')">Copy Lightning Invoice</button>
+
+      <div class="status" id="statusBox">
+        Waiting for payment. After payment is sent, your order status will update after confirmation.
+      </div>
+
+      <div class="status warn">
+        Cash App does not publicly provide a BTC transfer deep link with prefilled address and amount. This page wakes Cash App and keeps the BTC address / invoice ready for copy or scan.
+      </div>
+    </div>
+
+    <div class="footer">
+      Powered by Geliv Pay · BTC on-chain / Lightning payment demo
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script>
+    const order = {
+      orderId: "10001",
+      usdAmount: "100.00",
+      btcAmount: "0.00125",
+      btcAddress: "bc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      lightningInvoice: "lnbc100u1pxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      expireSeconds: 15 * 60
+    };
+
+    const btcURI = `bitcoin:${order.btcAddress}?amount=${order.btcAmount}&label=Geliv-Order-${order.orderId}`;
+
+    document.getElementById("orderId").textContent = order.orderId;
+    document.getElementById("usdAmount").textContent = "$" + order.usdAmount;
+    document.getElementById("btcAmount").textContent = order.btcAmount + " BTC";
+    document.getElementById("btcAddress").value = order.btcAddress;
+    document.getElementById("lightningInvoice").value = order.lightningInvoice;
+
+    new QRCode(document.getElementById("qrcode"), {
+      text: btcURI,
+      width: 198,
+      height: 198,
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+    async function copyValue(id) {
+      const el = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(el.value);
+        showStatus("Copied: " + id);
+      } catch (e) {
+        el.select();
+        document.execCommand("copy");
+        showStatus("Copied: " + id);
+      }
+    }
+
+    function openCashApp() {
+      window.location.href = "https://cash.app/";
+      setTimeout(() => {
+        showStatus("If Cash App did not open, copy the BTC address or Lightning invoice and paste it manually.");
+      }, 1200);
+    }
+
+    function showStatus(text) {
+      document.getElementById("statusBox").textContent = text;
+    }
+
+    let left = order.expireSeconds;
+    setInterval(() => {
+      if (left <= 0) {
+        document.getElementById("countdown").textContent = "Expired";
+        showStatus("This quote has expired. Please refresh the order amount before paying.");
+        return;
+      }
+      left--;
+      const m = String(Math.floor(left / 60)).padStart(2, "0");
+      const s = String(left % 60).padStart(2, "0");
+      document.getElementById("countdown").textContent = `${m}:${s}`;
+    }, 1000);
+  </script>
+</body>
+</html>
