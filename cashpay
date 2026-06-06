@@ -1,0 +1,120 @@
+// Node.js + Express 示例：Cash App BTC 支付中转页
+// 逻辑：用户访问 /pay/:orderId → 展示支付页 → 尝试唤醒 Cash App
+
+import express from "express";
+import QRCode from "qrcode";
+
+const app = express();
+app.use(express.json());
+
+// 模拟订单数据，正式环境从 MySQL 读取
+const orders = {
+  "10001": {
+    orderId: "10001",
+    usdAmount: 100,
+    btcAmount: "0.00125",
+    btcAddress: "bc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    lightningInvoice: "lnbc100u1pxxxxxxxxxxxxxxxxxxxxx",
+    expireAt: Date.now() + 15 * 60 * 1000,
+    status: "pending"
+  }
+};
+
+app.get("/pay/:orderId", async (req, res) => {
+  const order = orders[req.params.orderId];
+
+  if (!order) {
+    return res.status(404).send("Order not found");
+  }
+
+  const btcUri = `bitcoin:${order.btcAddress}?amount=${order.btcAmount}&label=Order-${order.orderId}`;
+
+  const qrDataUrl = await QRCode.toDataURL(btcUri);
+
+  res.send(`
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>BTC Payment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial; max-width: 480px; margin: 40px auto; padding: 20px; }
+    .box { border: 1px solid #ddd; border-radius: 12px; padding: 20px; }
+    button { width: 100%; padding: 14px; margin-top: 10px; font-size: 16px; border-radius: 8px; }
+    input { width: 100%; padding: 12px; margin-top: 8px; box-sizing: border-box; }
+    img { width: 220px; display: block; margin: 20px auto; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Pay with Bitcoin</h2>
+
+    <p>Order ID: ${order.orderId}</p>
+    <p>Amount: $${order.usdAmount}</p>
+    <p>BTC Amount: ${order.btcAmount} BTC</p>
+
+    <img src="${qrDataUrl}" />
+
+    <label>BTC Address</label>
+    <input id="btcAddress" value="${order.btcAddress}" readonly />
+
+    <label>Lightning Invoice</label>
+    <input id="invoice" value="${order.lightningInvoice}" readonly />
+
+    <button onclick="openCashApp()">Open Cash App</button>
+    <button onclick="copyText('btcAddress')">Copy BTC Address</button>
+    <button onclick="copyText('invoice')">Copy Lightning Invoice</button>
+
+    <p id="status">Waiting for payment...</p>
+  </div>
+
+  <script>
+    function openCashApp() {
+      // Cash App 没有公开 BTC 转账 deep link 参数
+      // 所以这里只做“唤醒 Cash App”，不保证能直达 BTC 付款页
+      window.location.href = "https://cash.app/";
+    }
+
+    function copyText(id) {
+      const input = document.getElementById(id);
+      input.select();
+      input.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(input.value);
+      alert("Copied");
+    }
+
+    async function checkStatus() {
+      const res = await fetch("/api/order/${order.orderId}/status");
+      const data = await res.json();
+
+      document.getElementById("status").innerText = "Status: " + data.status;
+
+      if (data.status !== "paid") {
+        setTimeout(checkStatus, 5000);
+      }
+    }
+
+    checkStatus();
+  </script>
+</body>
+</html>
+  `);
+});
+
+app.get("/api/order/:orderId/status", (req, res) => {
+  const order = orders[req.params.orderId];
+
+  if (!order) {
+    return res.status(404).json({ error: "Order not found" });
+  }
+
+  res.json({
+    orderId: order.orderId,
+    status: order.status
+  });
+});
+
+app.listen(3000, () => {
+  console.log("BTC payment page running on http://localhost:3000");
+});
