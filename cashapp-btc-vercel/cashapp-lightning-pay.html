@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CashApp Lightning Payment</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f5f8;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #061127;
+      display: flex;
+      justify-content: center;
+      padding: 26px 14px;
+    }
+    .phone {
+      width: 100%;
+      max-width: 430px;
+      background: #fff;
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      border: 1px solid #e6e8ee;
+    }
+    .secure {
+      width: fit-content;
+      margin: 0 auto 24px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #eafff1;
+      color: #00b94f;
+      font-weight: 700;
+    }
+    .brand-card {
+      border: 1px solid #e0e3ea;
+      border-radius: 18px;
+      padding: 26px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .cash-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: #00d650;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: 900;
+      margin: 0 auto 16px;
+    }
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .instant { color: #9aa3b8; font-size: 16px; }
+    .amount-box {
+      background: #e8fff0;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+    .section-title {
+      color: #00b94f;
+      font-weight: 800;
+      margin-bottom: 18px;
+      letter-spacing: .3px;
+    }
+    .amount-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .amount-btn {
+      border: 1px solid #b8f0cb;
+      background: #fff;
+      border-radius: 999px;
+      padding: 17px 0;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .amount-btn.active {
+      background: #00d650;
+      color: #fff;
+      border-color: #00d650;
+    }
+    .custom-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #b8f0cb;
+      border-radius: 999px;
+      padding: 14px 18px;
+    }
+    .custom-row span {
+      color: #00b94f;
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .custom-row input {
+      border: 0;
+      outline: none;
+      width: 100%;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .pay-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 21px;
+      background: #00d650;
+      color: white;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 14px 28px rgba(0,214,80,.28);
+      margin-bottom: 18px;
+    }
+    .invoice-page { display: none; }
+    .timer {
+      background: #fff9e8;
+      color: #c95400;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+    .amount-due {
+      text-align: center;
+      color: #9aa3b8;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .big-amount {
+      text-align: center;
+      color: #00d650;
+      font-size: 56px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .hint {
+      text-align: center;
+      color: #9aa3b8;
+      margin-bottom: 22px;
+    }
+    .qr-card {
+      border: 1px solid #e0e3ea;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: center;
+    }
+    #qrcode {
+      width: 260px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .info-card {
+      background: #fafbfe;
+      border-radius: 14px;
+      padding: 15px 18px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+    .info-card .label {
+      color: #9aa3b8;
+      font-weight: 700;
+    }
+    .info-card .value {
+      font-family: monospace;
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 220px;
+    }
+    .badge {
+      background: #fff0bf;
+      color: #c96b00;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .small-btn {
+      border: 0;
+      background: #ecfff2;
+      color: #00b94f;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .back {
+      text-align: center;
+      color: #6f7b93;
+      cursor: pointer;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+    .powered {
+      text-align: center;
+      color: #9aa3b8;
+      margin-top: 8px;
+    }
+    .powered b { color: #566175; }
+  </style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- 金额选择页 -->
+  <div id="amountPage">
+    <div class="secure">🛡 Secure Payment</div>
+
+    <div class="brand-card">
+      <div class="cash-logo">$</div>
+      <div class="brand-title">CashApp</div>
+      <div class="instant">Instant</div>
+    </div>
+
+    <div class="amount-box">
+      <div class="section-title">ⓢ SELECT AMOUNT</div>
+
+      <div class="amount-buttons">
+        <button class="amount-btn" onclick="setAmount(10)">$10</button>
+        <button class="amount-btn active" onclick="setAmount(15)">$15</button>
+        <button class="amount-btn" onclick="setAmount(20)">$20</button>
+      </div>
+
+      <div class="custom-row">
+        <span>$</span>
+        <input id="amountInput" type="number" min="1" value="15" oninput="manualAmount()" />
+      </div>
+    </div>
+
+    <button class="pay-btn" onclick="createInvoiceAndShow()">🔒 Pay Now →</button>
+
+    <div class="powered">○ Powered by <b>Cashapp</b></div>
+  </div>
+
+  <!-- invoice支付页 -->
+  <div id="invoicePage" class="invoice-page">
+    <div class="timer">TIME REMAINING <span id="timer">15:00</span></div>
+
+    <div class="amount-due">AMOUNT DUE</div>
+    <div class="big-amount" id="displayAmount">$15.00</div>
+    <div class="hint">Scan or tap to pay</div>
+
+    <div class="qr-card">
+      <div id="qrcode"></div>
+    </div>
+
+    <div class="info-card">
+      <div>
+        <div class="label">INVOICE ID</div>
+        <div class="value" id="invoiceId">---</div>
+      </div>
+      <div class="badge">⏱ AWAITING PAYMENT</div>
+    </div>
+
+    <div class="info-card">
+      <div class="label">lightning:</div>
+      <div class="value" id="invoiceShort">---</div>
+      <button class="small-btn" onclick="copyInvoice()">Copy</button>
+    </div>
+
+    <button class="pay-btn" onclick="openLightning()">💲 Pay Now →</button>
+    <div class="back" onclick="goBack()">← Change Amount</div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+let selectedAmount = 15;
+let currentInvoice = "";
+let currentLightningUrl = "";
+let countdownInterval = null;
+
+/*
+  正式上线时，把这里换成你的后端接口：
+  例如：
+  const API_CREATE_INVOICE = "https://yourdomain.com/api/create-invoice";
+
+  后端返回：
+  {
+    invoice: "lnbc....",
+    invoiceId: "019e9e...2fe7",
+    expiresIn: 3600
+  }
+
+  注意：真实 Lightning Invoice 不能靠前端随机生成，必须由 Coinsnap / BTCPay / Lightning Node 生成。
+*/
+const API_CREATE_INVOICE = "";
+
+// 仅用于界面测试，不能真实支付
+function demoInvoice(amount) {
+  const random = Math.random().toString(36).slice(2, 10);
+  return {
+    invoice: "lnbc" + amount + "0n1pjdemo" + random + "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+    invoiceId: "019e9e..." + random.slice(0, 4),
+    expiresIn: 3600
+  };
+}
+
+function setAmount(amount) {
+  selectedAmount = amount;
+  document.getElementById("amountInput").value = amount;
+
+  document.querySelectorAll(".amount-btn").forEach(btn => btn.classList.remove("active"));
+  event.target.classList.add("active");
+}
+
+function manualAmount() {
+  selectedAmount = Number(document.getElementById("amountInput").value || 0);
+  document.querySelectorAll(".amount-btn").forEach(btn => btn.classList.remove("active"));
+}
+
+async function createInvoiceAndShow() {
+  if (!selectedAmount || selectedAmount <= 0) {
+    alert("Please enter a valid amount");
+    return;
+  }
+
+  let data;
+
+  if (API_CREATE_INVOICE) {
+    const res = await fetch(API_CREATE_INVOICE, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amountUsd: selectedAmount })
+    });
+    data = await res.json();
+  } else {
+    data = demoInvoice(selectedAmount);
+  }
+
+  currentInvoice = data.invoice;
+  currentLightningUrl = "lightning:" + currentInvoice;
+
+  document.getElementById("amountPage").style.display = "none";
+  document.getElementById("invoicePage").style.display = "block";
+
+  document.getElementById("displayAmount").textContent = "$" + Number(selectedAmount).toFixed(2);
+  document.getElementById("invoiceId").textContent = data.invoiceId;
+  document.getElementById("invoiceShort").textContent = currentInvoice.slice(0, 12) + "..." + currentInvoice.slice(-8);
+
+  document.getElementById("qrcode").innerHTML = "";
+  new QRCode(document.getElementById("qrcode"), {
+    text: currentLightningUrl,
+    width: 260,
+    height: 260,
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  startTimer(data.expiresIn || 3600);
+}
+
+function openLightning() {
+  if (!currentLightningUrl) return;
+
+  // 这个会尝试唤起支持 lightning: 协议的钱包，Cash App 是否响应取决于设备和系统注册情况
+  window.location.href = currentLightningUrl;
+
+  setTimeout(() => {
+    // 兜底：如果没有唤醒，提示用户复制
+    console.log("If wallet did not open, copy invoice manually.");
+  }, 1200);
+}
+
+async function copyInvoice() {
+  try {
+    await navigator.clipboard.writeText(currentInvoice);
+    alert("Lightning invoice copied");
+  } catch (e) {
+    alert(currentInvoice);
+  }
+}
+
+function startTimer(seconds) {
+  clearInterval(countdownInterval);
+  let left = seconds;
+
+  countdownInterval = setInterval(() => {
+    if (left <= 0) {
+      clearInterval(countdownInterval);
+      document.getElementById("timer").textContent = "EXPIRED";
+      return;
+    }
+
+    const m = String(Math.floor(left / 60)).padStart(2, "0");
+    const s = String(left % 60).padStart(2, "0");
+    document.getElementById("timer").textContent = `${m}:${s}`;
+    left--;
+  }, 1000);
+}
+
+function goBack() {
+  clearInterval(countdownInterval);
+  document.getElementById("invoicePage").style.display = "none";
+  document.getElementById("amountPage").style.display = "block";
+}
+</script>
+
+</body>
+</html>
